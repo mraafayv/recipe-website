@@ -34,3 +34,13 @@ input, textarea {
   text-align: center;
   margin: 40px auto;
 }
+
+
+.page-title.dark{
+  color: rgb(235, 235, 235);
+}
+
+.loading.dark,
+.error.dark{
+  color: white;
+}

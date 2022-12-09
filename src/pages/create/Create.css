@@ -31,3 +31,13 @@
   .ingredients button {
     margin: 0 0 0 10px;
   }
+
+
+  .create.dark label span {
+    color: rgb(212, 212, 212);
+  }
+
+
+  .create.dark p {
+    color: white;
+  }

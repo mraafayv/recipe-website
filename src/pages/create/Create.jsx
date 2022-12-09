@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
+import { useTheme } from "../../hooks/useTheme";
 
 import "./Create.css";
 
@@ -13,6 +14,7 @@ export default function Create() {
   const ingredientInput = useRef(null);
 
   const navigate = useNavigate();
+  const { mode } = useTheme();
 
   const { postData, data, error } = useFetch("http://localhost:3000/recipes", "POST");
 
@@ -48,7 +50,7 @@ export default function Create() {
 
     // setTimeout(()=>{navigate('/')}, 2000)
     // console.log(title, cookingTime, method, ingredients);
-    // resetForm();
+    resetForm();
   };
   // {data && navigate('/')}
 
@@ -61,8 +63,8 @@ export default function Create() {
   };
 
   return (
-    <div className="create">
-      <h2 className="page-title">Add a new Recipe</h2>
+    <div className={`create ${mode}`}>
+      <h2 className={`page-title ${mode}`}>Add a new Recipe</h2>
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -77,7 +79,7 @@ export default function Create() {
 
         <label>
           <span>Recipe Ingredients:</span>
-          <div className="ingredients">
+          <div className={`ingredients ${mode}`}>
             <input
               type="text"
               onChange={(e) => setSingleIngredient(e.target.value)}
