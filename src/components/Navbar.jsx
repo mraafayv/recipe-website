@@ -4,11 +4,11 @@ import "./Navbar.css";
 import Searchbar from "./Searchbar";
 
 export default function Navbar() {
-  const { color, changeColor } = useTheme();
+  const { color } = useTheme();
 
   return (
     <div className="navbar" style={{ background: color }}>
-      <nav onClick={() => changeColor("green")}>
+      <nav>
         <Link to="/" className="brand">
           <h1>Hassan Pakwan Centre</h1>
         </Link>
