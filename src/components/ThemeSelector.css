@@ -14,3 +14,8 @@
     margin-left: 8px;
     border-radius: 50%;
 }
+
+.mode-selector{
+    margin-right: auto;
+    cursor: pointer;
+}
