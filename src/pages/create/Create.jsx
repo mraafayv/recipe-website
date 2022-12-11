@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme";
 
 import { db } from "../../firebase/config";
-import { doc, collection, setDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 import "./Create.css";
 
@@ -19,7 +19,12 @@ export default function Create() {
   const navigate = useNavigate();
   const { mode } = useTheme();
 
-  const dbRef = collection(db, "recipes");
+  const data = {
+    title,
+    cookingTime: cookingTime + " minutes",
+    ingredients,
+    method
+  }
 
   // const { postData, data, error } = useFetch("http://localhost:3000/recipes", "POST");
 
@@ -35,41 +40,22 @@ export default function Create() {
     ingredientInput.current.focus();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const ref = collection(db, "recipes");
+
+    await addDoc(ref, data);
+
+    resetForm();
+  };
+
   // useEffect(() => {
   //   if (data) {
-  //     console.log(data)
+  //     console.log(data);
   //     navigate("/");
   //   }
   // }, [data]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = {
-      title,
-      cookingTime: cookingTime + " minutes",
-      ingredients,
-      method,
-    };
-    // postData({
-    //   title,
-    //   cookingTime: cookingTime + " minutes",
-    //   ingredients,
-    //   method
-    // });
-
-    setDoc(dbRef, data)
-      .then((docRef) => {
-        console.log("document added successfully!");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // setTimeout(()=>{navigate('/')}, 2000)
-    // console.log(title, cookingTime, method, ingredients);
-    resetForm();
-  };
   // {data && navigate('/')}
 
   const resetForm = () => {
@@ -77,6 +63,8 @@ export default function Create() {
     setCookingTime("");
     setMethod("");
     setIngredients([]);
+    
+    setTimeout(()=> navigate('/'), 1000)
   };
 
   return (
