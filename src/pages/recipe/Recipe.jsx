@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import { useTheme } from "../../hooks/useTheme";
 import { db } from "../../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
@@ -8,7 +8,7 @@ import { doc, getDoc } from "firebase/firestore";
 import "./Recipe.css";
 
 export default function Recipe() {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [recipe, setRecipe] = useState(null);
 
@@ -16,29 +16,33 @@ export default function Recipe() {
   const navigate = useNavigate();
   const { mode } = useTheme();
 
+  
   const docRef = doc(db, "recipes", id);
-  console.log(docRef)
-
+  
   useEffect(() => {
     setIsPending(true)
     getDoc(docRef)
       .then((doc) => {
+        if(doc.data() === undefined){
+          setIsPending(false)
+          setError(true)
+        }
         setRecipe(doc.data());
         setIsPending(false)
       })
       .catch((err) => {
-        setError(err);
+        setError(true);
         console.log(err.message);
       });
 
     if (error) {
       setTimeout(() => navigate("/"), 2000);
     }
-  }, [error, navigate]);
+  }, [error, navigate, id]);
 
   return (
     <div className={`recipe ${mode}`}>
-      {error && <p className={`error ${mode}`}>{error}</p>}
+      {error && <p className={`error ${mode}`}>Could not fetch data</p>}
       {isPending && <p className={`loading ${mode}`}>Loading...</p>}
       {recipe && (
         <>
