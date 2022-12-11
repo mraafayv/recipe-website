@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { useFetch } from "../../hooks/useFetch";
 import { useTheme } from "../../hooks/useTheme";
@@ -49,14 +49,6 @@ export default function Create() {
     resetForm();
   };
 
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(data);
-  //     navigate("/");
-  //   }
-  // }, [data]);
-
-  // {data && navigate('/')}
 
   const resetForm = () => {
     setTitle("");
